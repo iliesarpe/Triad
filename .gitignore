@@ -1,0 +1,13 @@
+main
+*.colors
+out.txt
+refs.txt
+data/
+clustcoeff
+clustcoeff.*
+BiClique*
+lo*
+*.o
+tmp/
+.DS_Store
+statLibs/METIS/
