@@ -1,9 +1,9 @@
 CC = g++
 CFLAGS = -v --std=c++2a -g -O3 -fopenmp -march=native#-fsanitize=address 
-GUROBI_INCL="" #FIXME: ADD YOUT PATH
-GUROBI_LIB="" #FIXME: ADD YOUT PATH
+GUROBI_INCL="${GUROBI_HOME}/include" #FIXME: ADD YOUT PATH
+GUROBI_LIB="${GUROBI_HOME}/lib" #FIXME: ADD YOUT PATH
 FOLLIBS = ${PWD}/libs/
-EXEC = clustcoeff
+EXEC = triad
 
 
 all: main.cpp ${FOLLIBS}structures.h structures.o

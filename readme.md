@@ -33,7 +33,7 @@ Set up folder structure create the following folders (e.g., use `mkdir`):
 `["data/proc", "data/raw/", "results/qval/", "results/ouralg/fixedss/", "data/raw/labelled/", "data/raw/txt/", "results/adapt/"]`
 
 __STEP 4__
-Place the raw data (from STEP 2) in the folder `data/raw/`
+Place the raw data (from STEP 2) in the folder `data/raw/`, you can use the script `downloadData.sh` that we provide in the folder `scripts/`
 
 __STEP 5__
 
@@ -51,3 +51,15 @@ __DBLP CASE STUDY__
 
 1. run the script `downDblp.py` in the folder `/scripts`
 2. run `python driver.py dblpTemporal`
+
+__NEW: BUILDING APPTAINER IMAGE__  (_Build using a container_)
+We now provide also a practical container that can be build through [Apptainer](https://apptainer.org/) to avoid issues when building the code.
+
+To build the image just make sure that you have installed Apptainer on your system and that it is properly working, then simply run the following commands.
+NOTE: You need to setup the path to your gurobi license
+
+```
+# Build the base image of the OS
+apptainer build triad.sif buildImage.def
+
+```

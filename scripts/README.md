@@ -16,8 +16,12 @@ HG: higgs-social-followers.txt (https://snap.stanford.edu/data/higgs-twitter.htm
 LJ: soc-LiveJournal1.txt (https://snap.stanford.edu/data/soc-LiveJournal1.html)
 G500: graph500-scale23-ef16-adj.txt (https://networkrepository.com/graph500-scale23-ef16-adj.php)
 
-Make sure that they are in txt format such that each line consists of
-<src dst>
+You can download each dataset using the script downloadData.sh (note that you may need several GB of storage capacity)
 
-Then use the driver.py in the main folder to build an HDF5 file for each of such txt file (we will provide a tool in the final version of the current library)
+After the download the datasets will be in the folder ../data/raw/
 
+You now need to preprocess each dataset such that it is in a txt format with each line in the format
+
+`src dst`
+
+Then use the driver.py in the main folder to build an HDF5 file for each of such txt file 

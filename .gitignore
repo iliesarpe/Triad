@@ -11,3 +11,6 @@ lo*
 tmp/
 .DS_Store
 statLibs/METIS/
+*.slurm
+logs/
+data/

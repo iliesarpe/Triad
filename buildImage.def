@@ -1,0 +1,71 @@
+#!/bin/bash 
+
+bootstrap: docker
+From: continuumio/anaconda3
+
+%files
+  . /usr/src/Triad
+
+%environment
+  export GUROBI_HOME=/opt/gurobi/gurobi1103/linux64
+  export PATH=$GUROBI_HOME/bin:$PATH
+  export LD_LIBRARY_PATH=$GUROBI_HOME/lib:$LD_LIBRARY_PATH
+  # export GRB_LICENSE_FILE=/opt/gurobi/gurobi.lic  # You need to uncomment the line, and setup the path to your gurobi license
+  
+
+%post
+  export DEBIAN_FRONTEND=noninteractive
+  export TZ=Etc/UTC
+  export GUROBI_HOME=/opt/gurobi/gurobi1103/linux64
+  export PATH=$GUROBI_HOME/bin:$PATH
+  export LD_LIBRARY_PATH=$GUROBI_HOME/lib:$LD_LIBRARY_PATH
+
+  apt-get update
+  apt-get install -y \
+    git \
+    curl \
+    make \
+    cmake \
+    g++ \
+    libboost-all-dev \
+    libhdf5-dev
+
+   conda update -n base -c defaults conda -y
+
+   # Add Gurobis conda channel and install specific version
+   #conda config --add channels http://conda.anaconda.org/gurobi
+   #conda install -y gurobi=11.0.3
+   wget -v https://packages.gurobi.com/11.0/gurobi11.0.3_linux64.tar.gz
+   mkdir /opt/gurobi
+   # Extract Gurobi tarball
+   mkdir -p /opt/gurobi
+   tar -xzf gurobi11.0.3_linux64.tar.gz -C /opt/gurobi
+   rm gurobi11.0.3_linux64.tar.gz
+
+  # Install HighFive
+  cd /usr/src/
+  git clone https://github.com/BlueBrain/HighFive.git
+  cd HighFive
+  git checkout 4638084fc017f693e46d9349977044964f562daa
+  mkdir build && cd build
+  cmake .. -DHIGHFIVE_EXAMPLES=OFF
+  make install
+
+  # Install Json for modern C++
+  mkdir /usr/local/include/nlohmann
+  cd /usr/local/include/nlohmann
+  curl -O https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp
+
+  cat /etc/os-release
+  apt-get update
+  apt-get install -y make \
+  build-essential libssl-dev zlib1g-dev \
+  libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+  libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev \
+  libgdbm-dev libnss3-dev libedit-dev libc6-dev curl
+
+  cd /usr/src/Triad
+  make
+
+%runscript
+   /usr/src/Triad/triad "$@"
